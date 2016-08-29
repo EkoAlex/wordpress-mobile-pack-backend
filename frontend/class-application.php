@@ -25,14 +25,20 @@ if (!class_exists('WMobilePack_Application')) {
             if (!WMobilePack::is_active_plugin('WordPress Mobile Pack PRO'))
                 $this->check_load();
             if (WMobilePack::is_active_plugin('AMP')) {
-                add_filter( 'amp_post_template_file', 'dbawp_amp_set_custom_template', 10, 3 );
-                function dbawp_amp_set_custom_template( $file, $type, $post ) {
-                    if ( 'style' === $type ) {
-                        $file = WMP_PLUGIN_PATH . 'frontend/themes/app1/amp/style.php';
-                    }
-                    return $file;
-                }
+                add_filter( 'amp_post_template_file', array($this,'dbawp_amp_set_custom_template'), 10, 3 );
+               
             }    
+        }
+
+        /**
+         * Added filter for AMP custom style
+         */  
+        public function dbawp_amp_set_custom_template( $file, $type, $post ) 
+        {
+            if ( 'style' === $type ) {
+                $file = WMP_PLUGIN_PATH . 'frontend/themes/app1/amp/style.php';
+            }
+            return $file;
         }
 
         /**

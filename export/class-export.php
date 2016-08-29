@@ -459,7 +459,7 @@ if ( ! class_exists( 'WMobilePack_Export' ) ) {
            $filtered_terms = array();
            foreach ( $terms as $term )
            {
-               $result = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts p JOIN $wpdb->term_relationships rl ON p.ID = rl.object_id WHERE rl.term_taxonomy_id = $term->term_id AND p.post_status = 'publish' AND p.post_password = '' LIMIT 1");
+               $result = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts p JOIN $wpdb->term_relationships rl ON p.ID = rl.object_id WHERE rl.term_taxonomy_id = $term->term_id AND p.post_type = 'post' AND p.post_status = 'publish' AND p.post_password = '' LIMIT 1");
                if ( intval($result) > 0 )
                    $filtered_terms[] = $term;
            }
@@ -588,7 +588,7 @@ if ( ! class_exists( 'WMobilePack_Export' ) ) {
                 }
             }
             //remove the filter for exporting only categories with  published posts
-            remove_filter('get_terms', array('WMobilePack_Export','get_terms_filter'), 10);
+            remove_filter('get_terms', array($this,'get_terms_filter'), 10);
 
             // activate latest category only if we have at least 2 visible categories
             if (count($arr_categories) > 1) {
