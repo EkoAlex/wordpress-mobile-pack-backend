@@ -789,11 +789,6 @@ class ExportCategoriesTest extends WP_UnitTestCase
             )
         );
 
-        $visible_cat_id3 = $this->factory->category->create(
-            array(
-                'name' => 'Visible Test Category 3'
-            )
-        );
 
         $cat = get_categories('hide_empty=0');
         unset($cat[0]);
@@ -813,15 +808,14 @@ class ExportCategoriesTest extends WP_UnitTestCase
         $this->assertEquals(2, $test['rows']);
         $this->assertEquals(1, $test['page']);
         $this->assertEquals(2,count ($test['categories']));    
-        $this->assertEquals('Visible Test Category 1', $test['categories'][0]['name']);
-        $this->assertEquals('Visible Test Category 2', $test['categories'][1]['name']);
+        $this->assertEquals('Latest', $test['categories'][0]['name']);
+        $this->assertEquals('Visible Test Category 1', $test['categories'][1]['name']);
          
         
 
         wp_delete_term($visible_cat_id['term_id'], 'category');
         wp_delete_term($visible_cat_id2['term_id'], 'category');
-        wp_delete_term($visible_cat_id2['term_id'], 'category');
-
+        
     }
 
     function test_export_categories_returns_empty_and_page_and_rows_as_parameters_in_json_if_page_too_high () 
@@ -864,7 +858,7 @@ class ExportCategoriesTest extends WP_UnitTestCase
 
         wp_delete_term($visible_cat_id['term_id'], 'category');
         wp_delete_term($visible_cat_id2['term_id'], 'category');
-        wp_delete_term($visible_cat_id2['term_id'], 'category');
+        wp_delete_term($visible_cat_id3['term_id'], 'category');
     
 
         }

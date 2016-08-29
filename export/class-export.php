@@ -593,29 +593,14 @@ if ( ! class_exists( 'WMobilePack_Export' ) ) {
             // activate latest category only if we have at least 2 visible categories
             if (count($arr_categories) > 1) {
 
-                // read posts for the latest category (use all active categories)
-                $posts_query = new WP_Query(
-                    array(
-                        'numberposts' => 1,
-                        'cat' => implode(', ', $active_categories_ids),
-                        "posts_per_page" => 1,
-                        'post_type' => 'post',
-                        'post_status' => 'publish',
-                        'post_password' => ''
-                    )
+                $arr_categories[0] = array(
+                    'id' => 0,
+                    'order' => false,
+                    'name' => 'Latest',
+                    'name_slug' => 'Latest',
+                    'image' => "",
+                    'parent_id' => 0
                 );
-
-                if ($posts_query->have_posts()) {
-
-                    $arr_categories[0] = array(
-                        'id' => 0,
-                        'order' => false,
-                        'name' => 'Latest',
-                        'name_slug' => 'Latest',
-                        'image' => "",
-                        'parent_id' => 0
-                    );
-                }
             }
 
             $arr_categories = $this->order_categories($arr_categories);
